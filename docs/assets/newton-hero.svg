@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" role="img" aria-label="Newton — think carefully, push back honestly, ship what's earned">
+  <title>Newton — think carefully, push back honestly, ship what's earned</title>
+  <rect width="1200" height="320" fill="#FAF7F0"/>
+  <!-- Prism mark + rays, group anchored at (160, 65) -->
+  <g transform="translate(160, 65)">
+    <!-- incoming ray -->
+    <line x1="-60" y1="95" x2="59" y2="95" stroke="#7A9E7E" stroke-width="3" stroke-linecap="round"/>
+    <!-- equilateral prism: side=140, height=121.24 -->
+    <polygon points="100,24 170,145 30,145" fill="#7A9E7E"/>
+    <!-- outgoing rays, graduated opacity for dispersion effect -->
+    <line x1="141" y1="95" x2="244" y2="57"  stroke="#7A9E7E" stroke-width="3" stroke-linecap="round" opacity="0.95"/>
+    <line x1="141" y1="95" x2="249" y2="76"  stroke="#7A9E7E" stroke-width="3" stroke-linecap="round" opacity="0.80"/>
+    <line x1="141" y1="95" x2="251" y2="95"  stroke="#7A9E7E" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+    <line x1="141" y1="95" x2="249" y2="114" stroke="#7A9E7E" stroke-width="3" stroke-linecap="round" opacity="0.50"/>
+    <line x1="141" y1="95" x2="244" y2="133" stroke="#7A9E7E" stroke-width="3" stroke-linecap="round" opacity="0.35"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="490" y="183" font-family="Georgia, 'Times New Roman', serif" font-size="96" font-weight="400" fill="#2C3E35" letter-spacing="-2">Newton</text>
+  <!-- Tagline -->
+  <text x="492" y="228" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="400" fill="#5A6B63">Think carefully. Push back honestly. Ship what&#8217;s earned.</text>
+</svg>
