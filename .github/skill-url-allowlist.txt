@@ -1,0 +1,27 @@
+# Allowlist of URL hosts that may appear in SKILL.md bodies.
+#
+# One host per line. Exact match or subdomain match
+# (e.g. `example.com` matches `example.com` and `foo.example.com`).
+# Lines starting with `#` are comments. Blank lines are ignored.
+#
+# Checked by `scripts/check_skill_safety.py`. Any URL in a SKILL.md body
+# whose host is not on this list is a CI failure — either add the host here
+# deliberately, or remove the link.
+
+# Agent Skills open standard — referenced from SKILL.md bodies to point
+# readers at the specification this repo builds on.
+agentskills.io
+
+# Anthropic documentation and help — referenced by skills that describe
+# Claude capabilities or point contributors at official docs.
+docs.claude.com
+docs.anthropic.com
+support.anthropic.com
+support.claude.com
+www.anthropic.com
+anthropic.com
+claude.ai
+
+# GitHub — referenced for releases, issues, and repository links within
+# this marketplace.
+github.com
