@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "newton-skill",
+  "owner": {
+    "name": "PBNZ"
+  },
+  "plugins": [
+    {
+      "name": "newton",
+      "source": "./plugins/newton",
+      "description": "Reasoning and sparring partner mode.",
+      "version": "0.2.0"
+    }
+  ]
+}
