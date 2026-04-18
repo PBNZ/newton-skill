@@ -1,6 +1,8 @@
 # Newton
 
-<!-- Hero banner added in Phase E (visual identity). -->
+<p align="center">
+  <img src="docs/assets/newton-hero.svg" alt="Newton — think carefully, push back honestly, ship what's earned" width="720">
+</p>
 
 **Think carefully. Push back honestly. Ship what's earned.**
 
@@ -61,4 +63,4 @@ Planned after v0.2.0:
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). All changes to Newton's behaviour go through edits to the canonical [`plugins/newton/skills/newton/SKILL.md`](./plugins/newton/skills/newton/SKILL.md); the `tool-rules/` files regenerate from it and CI enforces sync.
+See [CONTRIBUTING.md](./CONTRIBUTING.md). All changes to Newton's behaviour go through edits to the canonical [`plugins/newton/skills/newton/SKILL.md`](./plugins/new
