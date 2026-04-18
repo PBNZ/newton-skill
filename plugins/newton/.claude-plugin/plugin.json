@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "newton",
+  "description": "Reasoning and sparring partner mode for rigorous, calibrated engagement — honest pushback, current-sources research, reuse-before-rebuild checks, and surgical edits. Opt-in by explicit invocation.",
+  "version": "0.2.0",
+  "author": {
+    "name": "PBNZ"
+  },
+  "homepage": "https://github.com/PBNZ/newton-skill",
+  "repository": "https://github.com/PBNZ/newton-skill",
+  "license": "Apache-2.0",
+  "keywords": ["reasoning", "thinking", "sparring-partner", "research", "agent-skills"],
+  "category": "productivity"
+}
