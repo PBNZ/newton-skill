@@ -1,0 +1,52 @@
+name: sync-rules
+
+# Regenerates tool-rules/* from the canonical SKILL.md and fails the build
+# if the committed files are stale. Contributors own the regeneration step
+# locally (`python3 scripts/generate-rule-files.py`) — CI never commits.
+#
+# Runs on PRs (so staleness is caught in review) and on push to main (so a
+# direct push without regeneration still trips a visible red build).
+
+on:
+  pull_request:
+    paths:
+      - "plugins/newton/skills/newton/SKILL.md"
+      - "scripts/generate-rule-files.py"
+      - "tool-rules/**"
+      - ".github/workflows/sync-rules.yml"
+  push:
+    branches: [main]
+    paths:
+      - "plugins/newton/skills/newton/SKILL.md"
+      - "scripts/generate-rule-files.py"
+      - "tool-rules/**"
+      - ".github/workflows/sync-rules.yml"
+  workflow_dispatch:
+
+jobs:
+  check-tool-rules-in-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Regenerate tool-rules/
+        run: python3 scripts/generate-rule-files.py
+
+      - name: Fail if regenerated files differ from committed
+        run: |
+          if ! git diff --quiet -- tool-rules/; then
+            echo "::error::tool-rules/ is out of sync with plugins/newton/skills/newton/SKILL.md"
+            echo "Run this locally and commit the result:"
+            echo "  python3 scripts/generate-rule-files.py"
+            echo ""
+            echo "Diff:"
+            git --no-pager diff -- tool-rules/
+            exit 1
+          fi
+          echo "OK  tool-rules/ is in sync with SKILL.md"

@@ -1,0 +1,143 @@
+#!/usr/bin/env python3
+"""Regenerate tool-specific rule files from the canonical SKILL.md.
+
+Single source of truth: plugins/newton/skills/newton/SKILL.md
+
+Emits under tool-rules/:
+- .cursorrules                — Cursor workspace rules
+- .windsurfrules              — Windsurf workspace rules
+- .clinerules                 — Cline workspace rules
+- copilot-instructions.md     — GitHub Copilot (copy to .github/ on install)
+- README.md                   — explains provenance and install mapping
+
+Each generated file carries a banner pointing back at the canonical source
+so a reader opening one of them in the wild knows where to send fixes.
+
+Run locally before committing any SKILL.md change:
+
+    python3 scripts/generate-rule-files.py
+
+CI (sync-rules.yml) runs the same command and fails the build if the
+working tree is dirty afterwards — i.e., the committed tool-rules/* files
+are stale relative to the current SKILL.md.
+"""
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+SKILL_PATH = REPO_ROOT / "plugins" / "newton" / "skills" / "newton" / "SKILL.md"
+OUT_DIR = REPO_ROOT / "tool-rules"
+
+# Filenames emitted under tool-rules/. Keys are labels used in README.md.
+TOOL_FILES: dict[str, str] = {
+    "Cursor": ".cursorrules",
+    "Windsurf": ".windsurfrules",
+    "Cline": ".clinerules",
+    "GitHub Copilot": "copilot-instructions.md",
+}
+
+BANNER = """<!--
+GENERATED FILE — DO NOT EDIT DIRECTLY.
+
+Source of truth: plugins/newton/skills/newton/SKILL.md
+Regenerate with:  python3 scripts/generate-rule-files.py
+CI check:         .github/workflows/sync-rules.yml
+
+If you want to change Newton's behaviour, edit SKILL.md and rerun the
+generator. Direct edits to this file will be overwritten on the next sync.
+-->
+
+"""
+
+README_TEMPLATE = """# Generated tool-rule files
+
+The files in this directory are **generated** from the canonical Newton
+skill definition at `plugins/newton/skills/newton/SKILL.md`. Do not edit
+them directly — edits here are overwritten on the next sync.
+
+To change Newton's behaviour, edit `SKILL.md` and run:
+
+    python3 scripts/generate-rule-files.py
+
+CI (`.github/workflows/sync-rules.yml`) fails the build on pull requests
+and pushes to `main` if `tool-rules/*` is out of sync with `SKILL.md`.
+
+## Install mapping
+
+| Tool             | Copy this file into your project as      |
+|------------------|------------------------------------------|
+{install_rows}
+
+## Why committed + generated
+
+Keeping the regenerated files in the repo means tools that read them at
+runtime (Cursor reading `.cursorrules` from a workspace, Copilot reading
+`.github/copilot-instructions.md`) don't need a build step. The trade-off
+is that contributors must rerun the generator when editing `SKILL.md`;
+CI enforces that rule so stale rule files can't land on `main`.
+"""
+
+
+def strip_frontmatter(text: str) -> str:
+    """Drop YAML frontmatter (if present) and return the body only."""
+    if not text.startswith("---"):
+        return text
+    lines = text.splitlines(keepends=True)
+    if lines[0].strip() != "---":
+        return text
+    for i in range(1, len(lines)):
+        if lines[i].strip() == "---":
+            return "".join(lines[i + 1 :]).lstrip("\n")
+    # No closing fence — treat whole file as body (don't silently truncate).
+    return text
+
+
+def install_mapping() -> dict[str, str]:
+    """Per-tool install instructions used in the README table."""
+    return {
+        "Cursor": "`.cursorrules` at workspace root",
+        "Windsurf": "`.windsurfrules` at workspace root",
+        "Cline": "`.clinerules` at workspace root",
+        "GitHub Copilot": "`.github/copilot-instructions.md`",
+    }
+
+
+def render_readme() -> str:
+    mapping = install_mapping()
+    rows = "\n".join(
+        f"| {tool:<16} | {target:<40} |"
+        for tool, target in mapping.items()
+    )
+    return README_TEMPLATE.format(install_rows=rows)
+
+
+def main() -> int:
+    if not SKILL_PATH.exists():
+        print(f"error: canonical SKILL.md missing at {SKILL_PATH}", file=sys.stderr)
+        return 1
+
+    skill_text = SKILL_PATH.read_text(encoding="utf-8")
+    body = strip_frontmatter(skill_text)
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    written: list[str] = []
+    for _tool, filename in TOOL_FILES.items():
+        out_path = OUT_DIR / filename
+        out_path.write_text(BANNER + body, encoding="utf-8")
+        written.append(str(out_path.relative_to(REPO_ROOT)))
+
+    readme_path = OUT_DIR / "README.md"
+    readme_path.write_text(render_readme(), encoding="utf-8")
+    written.append(str(readme_path.relative_to(REPO_ROOT)))
+
+    for rel in written:
+        print(f"wrote {rel}")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
