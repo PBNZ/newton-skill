@@ -63,4 +63,4 @@ Planned after v0.2.0:
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). All changes to Newton's behaviour go through edits to the canonical [`plugins/newton/skills/newton/SKILL.md`](./plugins/new
+See [CONTRIBUTING.md](./CONTRIBUTING.md). All changes to Newton's behaviour go through edits to the canonical [`plugins/newton/skills/newton/SKILL.md`](./plugins/newton/skills/newton/SKILL.md); the surface-specific files under [`tool-rules/`](./tool-rules/) regenerate from it via [`scripts/generate-rule-files.py`](./scripts/generate-rule-files.py).
