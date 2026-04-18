@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to (re)attach assets to (e.g. v0.2.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Attach skill files to release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Resolve tag
+        id: tag
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "name=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # In the newton-skill repo this find returns exactly one path:
+      # plugins/newton/skills/newton/SKILL.md, which becomes newton.SKILL.md.
+      # The generic logic is kept in sync with pbnz-skills deliberately.
+      - name: Collect SKILL.md files
+        run: |
+          set -euo pipefail
+          mkdir -p release-assets
+          while IFS= read -r path; do
+            plugin=$(echo "$path" | cut -d'/' -f2)
+            skill=$(echo "$path" | cut -d'/' -f4)
+            if [ "$plugin" = "$skill" ]; then
+              dest="${plugin}.SKILL.md"
+            else
+              dest="${plugin}.${skill}.SKILL.md"
+            fi
+            cp "$path" "release-assets/${dest}"
+          done < <(find plugins -type f -name SKILL.md | sort)
+          echo "Prepared assets:"
+          ls -la release-assets/
+
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="${{ steps.tag.outputs.name }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists — uploading assets with --clobber"
+            gh release upload "$TAG" release-assets/*.SKILL.md --clobber
+          else
+            echo "Creating release $TAG"
+            gh release create "$TAG" release-assets/*.SKILL.md \
+              --title "$TAG" \
+              --generate-notes
+          fi
