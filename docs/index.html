@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton — reasoning and sparring partner for Claude</title>
+    <meta name="description" content="Newton is a reasoning and sparring partner skill for Claude and any agent that reads the Agent Skills standard. Think carefully, push back honestly, ship what's earned.">
+    <link rel="canonical" href="https://newton.mystuffonline.org/">
+    <meta property="og:title" content="Newton — reasoning and sparring partner for Claude">
+    <meta property="og:description" content="Think carefully. Push back honestly. Ship what's earned. An opt-in skill for rigour over speed.">
+    <meta property="og:image" content="https://newton.mystuffonline.org/assets/og-card.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://newton.mystuffonline.org/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="assets/newton-mark.svg">
+    <style>
+        :root {
+            --sage: #7A9E7E;
+            --sage-dark: #5E7D62;
+            --ink: #2D3B30;
+            --ink-soft: #4B5A4E;
+            --warm: #FAF7F0;
+            --warm-edge: #EFEAD9;
+            --rule: #D9D2C0;
+            --code-bg: #F3EEDE;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--ink);
+            background: var(--warm);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        header {
+            padding: 48px 0 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--rule);
+        }
+        header img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 16px;
+        }
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--ink-soft);
+            margin: 8px 0 24px;
+            font-style: italic;
+        }
+        .cta {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 6px;
+            background: var(--sage);
+            color: var(--warm);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.15s;
+        }
+        .cta:hover { background: var(--sage-dark); }
+        .cta.secondary {
+            background: transparent;
+            color: var(--sage-dark);
+            border: 1.5px solid var(--sage);
+        }
+        .cta.secondary:hover { background: var(--warm-edge); }
+        main { padding: 32px 0 48px; }
+        h1 { font-size: 2.25rem; margin: 0 0 8px; color: var(--ink); letter-spacing: -0.02em; }
+        h2 {
+            font-size: 1.5rem;
+            margin: 40px 0 12px;
+            color: var(--ink);
+            border-bottom: 1px solid var(--rule);
+            padding-bottom: 6px;
+        }
+        h3 { font-size: 1.125rem; margin: 24px 0 8px; color: var(--ink); }
+        p { margin: 0 0 14px; }
+        ul { margin: 0 0 16px; padding-left: 22px; }
+        li { margin-bottom: 8px; }
+        a { color: var(--sage-dark); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+        a:hover { color: var(--sage); }
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Courier New", monospace;
+            font-size: 0.92em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 0.95rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--rule);
+            vertical-align: top;
+        }
+        th {
+            background: var(--warm-edge);
+            font-weight: 600;
+        }
+        tr:last-child td { border-bottom: none; }
+        footer {
+            border-top: 1px solid var(--rule);
+            padding: 24px 0 48px;
+            text-align: center;
+            color: var(--ink-soft);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 520px) {
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.25rem; }
+            .tagline { font-size: 1.05rem; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 8px 6px; }
+            .cta { display: block; margin: 8px 0; }
+        }
+    </style>
+    <!-- GOOGLE_ANALYTICS_PLACEHOLDER -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="assets/newton-hero.svg" alt="Newton — think carefully, push back honestly, ship what's earned">
+            <p class="tagline">Think carefully. Push back honestly. Ship what's earned.</p>
+            <div>
+                <a class="cta" href="#install">Install</a>
+                <a class="cta secondary" href="https://github.com/PBNZ/newton-skill">View on GitHub</a>
+            </div>
+        </header>
+        <main>
+            <p>Newton is a reasoning and sparring partner for any agent that reads the <a href="https://agentskills.io/">Agent Skills</a> standard. It's not a domain expert — it's a posture: when you want rigour over speed, honest pushback over flattery, current sources over training-data assumptions, and reuse-before-rebuild over fresh scripts that duplicate what's already there.</p>
+
+            <p>Newton is <strong>opt-in by explicit invocation</strong>. It only activates when you summon it by name (&ldquo;Newton:&rdquo;, &ldquo;Newton —&rdquo;, &ldquo;Newton, quick: …&rdquo;). The rest of the time your agent behaves normally.</p>
+
+            <h2>What Newton does</h2>
+            <ul>
+                <li><strong>Honest engagement, not performed agreement or performed scepticism.</strong> Pushes back when there's a real reason; agrees plainly when you're right; flags its own uncertainty instead of confabulating a plausible-sounding answer.</li>
+                <li><strong>Current authoritative sources.</strong> For anything that could have changed since training — versions, APIs, prices, regulations, current events — Newton searches before asserting, prefers primary sources, and notes dates when claims are time-sensitive.</li>
+                <li><strong>Reuse before reinvention.</strong> Before building anything substantial, Newton checks what already solves it (platform features, first-party samples, well-maintained libraries, your own past work) and reports findings before generating new code.</li>
+            </ul>
+
+            <h2 id="install">Install</h2>
+            <p>Pick the row for your tool:</p>
+            <table>
+                <thead>
+                    <tr><th>Surface</th><th>How to install</th><th>Auto-updates?</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Claude Code</strong></td>
+                        <td><code>/plugin marketplace add PBNZ/newton-skill</code> then <code>/plugin install newton@newton-skill</code></td>
+                        <td>Yes — <code>/plugin update</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude Cowork</strong></td>
+                        <td>Same as Claude Code (shared plugin system)</td>
+                        <td>Yes — <code>/plugin update</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude.ai / Desktop</strong></td>
+                        <td>Settings → Skills → Add skill → upload <code>SKILL.md</code> from the <a href="https://github.com/PBNZ/newton-skill/releases/latest">latest release</a></td>
+                        <td>Manual — re-upload on new releases</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude API</strong></td>
+                        <td>Attach the release's <code>SKILL.md</code> asset via the <a href="https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview">Skills API</a></td>
+                        <td>Manual</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Any Agent-Skills tool</strong> (<code>gh skill</code>)</td>
+                        <td><code>gh skill add PBNZ/newton-skill</code></td>
+                        <td>Yes — <code>gh skill upgrade</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cursor</strong></td>
+                        <td>Copy <code>tool-rules/.cursorrules</code> to your workspace root as <code>.cursorrules</code></td>
+                        <td>Manual</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Windsurf</strong></td>
+                        <td>Copy <code>tool-rules/.windsurfrules</code> to your workspace root as <code>.windsurfrules</code></td>
+                        <td>Manual</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cline</strong></td>
+                        <td>Copy <code>tool-rules/.clinerules</code> to your workspace root as <code>.clinerules</code></td>
+                        <td>Manual</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GitHub Copilot</strong></td>
+                        <td>Copy <code>tool-rules/copilot-instructions.md</code> into your repo as <code>.github/copilot-instructions.md</code></td>
+                        <td>Manual</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>The files under <code>tool-rules/</code> are <strong>generated</strong> from the canonical <code>SKILL.md</code> by <code>scripts/generate-rule-files.py</code>; CI fails the build if they drift. Whichever surface you install through, you're running the same methodology.</p>
+
+            <h2>When to use Newton</h2>
+            <p>Use Newton when you're about to make a decision you'd regret getting wrong. Architecture calls, thesis-level arguments, a multi-week plan — anything where the point isn't quick-and-polished and you'd rather find the weak spot before you build on it than after. Newton's opening move is to check whether the framing holds up before starting the work, and its closing move is to re-read its own draft and surface the weakest part instead of shipping past it.</p>
+            <p>Use Newton when you need current authoritative information. Software versions, API behaviour, regulations, prices, current events — anything that moves. Newton treats time-sensitive claims as needing a search, not a recollection, and prefers vendor docs, RFCs, and standards bodies over SEO-optimised aggregators. It flags source dates when it matters.</p>
+            <p>Use Newton when you're asking <em>how do I X</em> and you suspect the answer is &ldquo;something already does this&rdquo;. Before generating a fresh script, Newton checks what's already in your platform, your available skills, a community-standard library, or your own prior work — and reports back with a recommendation (use-as-is, modify, or build-fresh with a specific reason) before building anything.</p>
+            <p>Skip Newton for trivial tasks that just need an answer. That's what its quick-start mode exists for (<code>Newton, quick: …</code>) — principles applied silently, ceremony skipped.</p>
+
+            <h2>What makes Newton different from just prompting &ldquo;be more critical&rdquo;</h2>
+            <p>&ldquo;Be more critical&rdquo; produces performed scepticism — manufactured objections that sound rigorous but don't change the answer. Newton is calibrated the other way: push back when there's a real reason, agree plainly when you're right, and flag genuine uncertainty rather than either hedging or arguing to seem sharp. The skill spells out what &ldquo;real reason&rdquo; looks like, what self-critique-before-delivery means in practice, and when clarifying questions are load-bearing versus ceremonial — so the behaviour is consistent turn-to-turn rather than drifting with each prompt.</p>
+            <p>Newton also operationalises reuse-before-rebuild, current-sources research, surgical editing, and handoff-when-scope-outgrows-the-chat as explicit sub-routines the agent runs, not as vibes. That's what makes it a <em>skill</em> rather than a prompt: the agent loads the methodology once and applies it consistently, with visible reuse-check reports and dated sources, rather than re-deriving the disposition from your tone every turn.</p>
+
+            <h2>Future development</h2>
+            <p>Planned after v0.2.0:</p>
+            <ul>
+                <li><strong>Additional-language READMEs.</strong> This README is English-only at v0.2.0. Translations (and a landing-page language switcher) are tracked in the <a href="https://github.com/PBNZ/newton-skill/issues">issues</a>.</li>
+                <li><strong>Sub-agent decomposition (v0.3.0).</strong> Newton's research, reuse-check, and self-critique passes are candidates for dedicated sub-agents — keeping the top-level conversation lean while heavy work happens in focused contexts.</li>
+            </ul>
+        </main>
+        <footer>
+            <p>Licensed under <a href="https://github.com/PBNZ/newton-skill/blob/main/LICENSE">Apache-2.0</a> · Built by <a href="https://github.com/PBNZ">PBNZ</a></p>
+        </footer>
+    </div>
+</body>
+</html>
