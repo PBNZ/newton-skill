@@ -218,11 +218,15 @@
             <p>&ldquo;Be more critical&rdquo; produces performed scepticism — manufactured objections that sound rigorous but don't change the answer. Newton is calibrated the other way: push back when there's a real reason, agree plainly when you're right, and flag genuine uncertainty rather than either hedging or arguing to seem sharp. The skill spells out what &ldquo;real reason&rdquo; looks like, what self-critique-before-delivery means in practice, and when clarifying questions are load-bearing versus ceremonial — so the behaviour is consistent turn-to-turn rather than drifting with each prompt.</p>
             <p>Newton also operationalises reuse-before-rebuild, current-sources research, surgical editing, and handoff-when-scope-outgrows-the-chat as explicit sub-routines the agent runs, not as vibes. That's what makes it a <em>skill</em> rather than a prompt: the agent loads the methodology once and applies it consistently, with visible reuse-check reports and dated sources, rather than re-deriving the disposition from your tone every turn.</p>
 
+            <h2>Calibrated for current-generation models</h2>
+            <p>Newton is model-agnostic by design — the same methodology runs on Opus, Sonnet, and Haiku — but v0.3.0 is tuned so current-generation capabilities (adaptive thinking, implicit tool detection, session memory, parallel execution, high-resolution vision) are leveraged rather than fought. Tool guidance is outcome-oriented instead of prescriptive, independent sub-tasks parallelise, multi-turn sessions can use file-system memory, and visual input is treated as primary evidence. Older models still get the full Newton experience with graceful degradation — no feature relies on a specific model.</p>
+            <p>Want model-specific behaviour layered on top of <em>every</em> skill, not just Newton? v0.3.0 ships an optional <a href="https://github.com/PBNZ/newton-skill/blob/main/docs/examples/router-claude-md.md">router CLAUDE.md example</a> you can drop into your own <code>~/.claude/CLAUDE.md</code>. It's opt-in — the plugin does not install it for you.</p>
+
             <h2>Future development</h2>
-            <p>Planned after v0.2.0:</p>
+            <p>Planned after v0.3.0:</p>
             <ul>
-                <li><strong>Additional-language READMEs.</strong> This README is English-only at v0.2.0. Translations (and a landing-page language switcher) are tracked in the <a href="https://github.com/PBNZ/newton-skill/issues">issues</a>.</li>
-                <li><strong>Sub-agent decomposition (v0.3.0).</strong> Newton's research, reuse-check, and self-critique passes are candidates for dedicated sub-agents — keeping the top-level conversation lean while heavy work happens in focused contexts.</li>
+                <li><strong>Additional-language READMEs.</strong> The README and this landing page are English-only at v0.3.0. Translations (and a language switcher) are tracked in the <a href="https://github.com/PBNZ/newton-skill/issues">issues</a>.</li>
+                <li><strong>Sub-agent decomposition.</strong> Newton's research, reuse-check, and self-critique passes are candidates for dedicated sub-agents — keeping the top-level conversation lean while heavy work happens in focused contexts. v0.3.0 shipped a principle-level parallelisation note as the stepping stone; dedicated sub-agents are on the roadmap for a later release.</li>
             </ul>
         </main>
         <footer>
