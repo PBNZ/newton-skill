@@ -43,7 +43,7 @@ Open an issue using the **Feature request** template. For a proposed change to N
 - **Skill content** lives at `plugins/newton/skills/newton/SKILL.md`. This is the canonical source of truth for Newton's behaviour.
 - **Reference files** (extended methodology that stays out of the main SKILL body to keep it scannable) live under `plugins/newton/skills/newton/references/`.
 - **The slash command** (`/newton:newton`) is defined at `plugins/newton/commands/newton.md`.
-- **Tool-specific rule files** for Cursor, Windsurf, Cline, Copilot, and similar tools live under `tool-rules/` and at the corresponding tool-specific paths. These are **generated** from `SKILL.md` by `scripts/generate-rule-files.py` and the `sync-rules` workflow — do not hand-edit them. Edit `SKILL.md` instead and let the pipeline regenerate.
+- **Tool-specific rule files** for Cursor, Windsurf, Cline, Copilot, and similar tools live under `tool-rules/` and at the corresponding tool-specific paths. These are **generated** from `SKILL.md` with the reference files under `plugins/newton/skills/newton/references/` inlined below the main body, by `scripts/generate-rule-files.py` and the `sync-rules` workflow — do not hand-edit them. Edit `SKILL.md` (or the appropriate reference file) instead and let the pipeline regenerate. The inlining is deliberate: non-Claude-Code surfaces that read these files don't do progressive disclosure, so they need the full methodology in one place.
 - **Plugin manifest:** `plugins/newton/.claude-plugin/plugin.json`.
 - **Marketplace manifest:** `.claude-plugin/marketplace.json`.
 - **Landing page** lives under `docs/` and is published to GitHub Pages on the `main` branch.

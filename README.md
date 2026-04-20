@@ -50,12 +50,18 @@ Skip Newton for trivial tasks that just need an answer. That's what its quick-st
 
 Newton also operationalises reuse-before-rebuild, current-sources research, surgical editing, and handoff-when-scope-outgrows-the-chat as explicit sub-routines the agent runs, not as vibes. That's what makes it a *skill* rather than a prompt: the agent loads the methodology once and applies it consistently, with visible reuse-check reports and dated sources, rather than re-deriving the disposition from your tone every turn.
 
+## Using Newton on Opus 4.7
+
+Newton is model-agnostic by design — the same methodology runs on Opus, Sonnet, and Haiku — but v0.3.0 is tuned so Opus 4.7's native strengths (adaptive thinking, implicit tool detection, session memory, parallel execution, high-resolution vision) are leveraged rather than fought. Tool guidance is outcome-oriented instead of prescriptive; Newton defaults toward quick-start at low/medium effort and full methodology at high/xhigh; independent sub-tasks parallelise; multi-turn sessions can use file-system memory; visual input is treated as primary evidence.
+
+If you want model-specific behaviour layered on top of *every* skill — not just Newton — see [`docs/examples/router-claude-md.md`](./docs/examples/router-claude-md.md) for an optional user-level CLAUDE.md template. It's opt-in: copy into your `~/.claude/CLAUDE.md` or a project-level CLAUDE.md. The plugin does not install it for you.
+
 ## Future development
 
-Planned after v0.2.0:
+Planned after v0.3.0:
 
-- **Additional-language READMEs.** This README is English-only at v0.2.0. Translations (and a landing-page language switcher) are tracked in the [issues](https://github.com/PBNZ/newton-skill/issues).
-- **Sub-agent decomposition (v0.3.0).** Newton's research, reuse-check, and self-critique passes are candidates for dedicated sub-agents — keeping the top-level conversation lean while heavy work happens in focused contexts.
+- **Additional-language READMEs.** This README is English-only. Translations (and a landing-page language switcher) are tracked in the [issues](https://github.com/PBNZ/newton-skill/issues).
+- **Sub-agent decomposition.** Newton's research, reuse-check, and self-critique passes are candidates for dedicated sub-agents — keeping the top-level conversation lean while heavy work happens in focused contexts. v0.3.0 shipped a principle-level parallelisation note as the stepping stone; the dedicated-subagent work is deferred to a later release.
 
 ## Licence
 

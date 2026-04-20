@@ -6,6 +6,38 @@ Format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/); v
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-04-20
+
+Context-efficiency restructure and alignment with current-generation models (Opus 4.7). Newton's methodology is unchanged in substance — honest engagement, self-critique before delivery, current sources, reuse before reinvention, simplicity, surgical edits, attribution — but its packaging now matches the anti-ceremony discipline it teaches. Per-invocation context footprint drops by roughly 45% for Claude Code users via progressive disclosure; non-Claude-Code surfaces keep the full methodology in their generated rule files.
+
+Backwards-compatible on Sonnet 4.6 and Haiku 4.5. No behavioural regressions; Newton's voice and triggering rules are unchanged.
+
+### Changed
+
+- **SKILL.md restructured for progressive disclosure.** Research methodology, reuse-check methodology, attribution, and handoff are extracted into `plugins/newton/skills/newton/references/*.md` and replaced in the main body with short pointer blocks. The Claude Code plugin loads only what the current turn needs; reference files are pulled on demand. SKILL.md body drops from roughly 5,200 to roughly 2,900 body tokens.
+- **Core principles consolidated.** The previous triple coverage (Core principles + "What Newton does not do" + Self-evaluation gate) is now a single core-principles section plus a leaner pre-delivery gate. Each inversion (no manufactured objections, no silent reuse-skipping, no invented citations) lives inline with the principle it sharpens.
+- **Meta-commentary removed.** The closing rationale paragraph and the duplicated "shape in practice" paragraph were redundant with content elsewhere; gone.
+- **Tool guidance moved from prescriptive to outcome-oriented.** The main body says *"verify time-sensitive claims against current sources before asserting"* where it previously said *"run `web_search`"*; tool-specific query design, source ranking, and fetching guidance now live in `references/research-methodology.md`. This both shrinks per-invocation context and aligns with Opus 4.7's implicit tool detection.
+- **Tone-management instructions Opus 4.7 handles natively were removed.** No more explicit "do not use emojis unless the user does", "do not use praise openers", "do not repeat the user's question back" — replaced with one line: your native length-and-tone calibration is correct; match the depth the task warrants. The distinctive Newton voice rules (pushback calibration, prose-by-default, cite-only-what-was-actually-checked) are kept.
+- **YAML frontmatter trimmed.** The closing rationale sentence in the description (*"Newton is opt-in by design — its scrutiny-first approach adds length, tokens, and ceremony…"*) is removed; triggering-discipline sentences are kept verbatim, because those carry the activation gate.
+- **Tool-rules generator updated.** `scripts/generate-rule-files.py` now inlines `references/*.md` under the main SKILL body so `.cursorrules`, `.windsurfrules`, `.clinerules`, and `copilot-instructions.md` remain self-contained for surfaces that don't do progressive disclosure. A separator comment names each inlined file so the provenance is clear.
+- `plugin.json` and `marketplace.json` versions bumped to `0.3.0`.
+
+### Added
+
+- **Effort-level awareness** in the opening move. At low/medium effort, Newton defaults toward quick-start behaviour even without an explicit signal; at high/xhigh, the full opening move applies; at max, maximum depth. The caller's effort dial is treated as a signal about how much deliberation the task warrants. Non-Opus environments that don't expose effort simply follow default mode.
+- **Session-memory guidance** for multi-turn Newton work — keep resolved decisions, intermediate findings, and stated constraints in file-system memory when available, read at session start, update as decisions harden. Graceful on environments without memory.
+- **Principle-level parallelisation note.** For independent sub-tasks (researching two topics, comparing candidate libraries, running a reuse check while drafting), Newton considers parallel dispatch rather than default serial execution. Sub-agent decomposition into dedicated Newton roles (newton-researcher, newton-reuse-checker, etc.) remains deferred to a later release.
+- **Vision-as-primary-evidence note** inside `references/research-methodology.md` — when visual input is provided, reason from the image directly rather than OCR-then-reason; use programmatic image analysis where pixel-level accuracy matters.
+- **`docs/examples/router-claude-md.md`** — an optional user-level CLAUDE.md template that detects the running model and layers model-appropriate behaviour on top of any loaded skill (not just Newton). Opt-in by copying into `~/.claude/CLAUDE.md` or a project-level CLAUDE.md; **not** auto-installed by the plugin.
+- `plugins/newton/commands/newton.md` — the previously empty slash-command file now carries a minimal stub so `/newton:newton [your question]` works as an invocation surface alongside the natural-language triggers.
+
+### Notes
+
+- Sub-agent decomposition is deferred again — this release focuses on context efficiency and model-awareness inside the single-skill surface. Dedicated Newton subagents remain on the roadmap.
+- README documentation of the new router example is added under *Using Newton on Opus 4.7*.
+- The GitHub Pages landing page at `docs/` is unchanged; the restructure is invisible there.
+
 ## [0.2.1] — 2026-04-19
 
 Attribution layer for Newton's debt to upstream prior art. Behaviour of the skill when invoked is unchanged — frontmatter, name, description, and trigger rules are identical to `0.2.0`. What changes is that Newton now attributes derived work as part of normal operation, and the repository carries the licence and credit trail that should have landed with `0.2.0`.
@@ -50,6 +82,7 @@ Initial public release as a standalone repository. Newton was previously distrib
 - Sub-agent decomposition is deferred to v0.3.0.
 - READMEs are English-only at v0.2.0. Translations and a landing-page language switcher are tracked in issues.
 
-[Unreleased]: https://github.com/PBNZ/newton-skill/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/PBNZ/newton-skill/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/PBNZ/newton-skill/releases/tag/v0.3.0
 [0.2.1]: https://github.com/PBNZ/newton-skill/releases/tag/v0.2.1
 [0.2.0]: https://github.com/PBNZ/newton-skill/releases/tag/v0.2.0
