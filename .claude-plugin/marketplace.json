@@ -1,6 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "newton-skill",
+  "description": "Newton — an opt-in reasoning and sparring-partner skill, distributed as a single-plugin marketplace.",
   "owner": {
     "name": "PBNZ"
   },
@@ -9,7 +10,8 @@
       "name": "newton",
       "source": "./plugins/newton",
       "description": "Reasoning and sparring partner mode.",
-      "version": "0.3.0"
+      "version": "0.3.0",
+      "category": "productivity"
     }
   ]
 }
