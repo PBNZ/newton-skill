@@ -6,6 +6,13 @@ Format follows [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/); v
 
 ## [Unreleased]
 
+### Changed
+
+- `category` moved from `plugin.json` to the marketplace entry, and the marketplace manifest
+  gained a top-level `description` — Claude Code reads `category` from the marketplace manifest,
+  not the plugin manifest, and both were flagged by `claude plugin validate` (now zero warnings).
+  No behaviour change.
+
 ## [0.3.0] — 2026-04-20
 
 Context-efficiency restructure and alignment with current-generation models (Opus 4.7). Newton's methodology is unchanged in substance — honest engagement, self-critique before delivery, current sources, reuse before reinvention, simplicity, surgical edits, attribution — but its packaging now matches the anti-ceremony discipline it teaches. Per-invocation context footprint drops by roughly 45% for Claude Code users via progressive disclosure; non-Claude-Code surfaces keep the full methodology in their generated rule files.
